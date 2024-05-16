@@ -1,4 +1,4 @@
-package com.nntk;
+package com.nntk.jdbc.driver;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
@@ -12,8 +12,9 @@ import java.util.Calendar;
 import java.util.List;
 
 @Slf4j
-public class JqPreparedStatement implements PreparedStatement {
+public class HttpPreparedStatement implements PreparedStatement {
     private boolean isComplete = false;
+
     @Override
     public ResultSet executeQuery() throws SQLException {
 
@@ -21,9 +22,9 @@ public class JqPreparedStatement implements PreparedStatement {
         String tableName = "t1";
         List<String> cols = Lists.newArrayList("l1", "l2");
 
-        JqResultSet jqResultSet = new JqResultSet(null, cols, tableName);
+        HttpResultSet httpResultSet = new HttpResultSet(cols);
         isComplete = true;
-        return jqResultSet;
+        return httpResultSet;
     }
 
     @Override

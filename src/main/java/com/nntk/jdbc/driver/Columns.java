@@ -1,9 +1,4 @@
-package com.nntk;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+package com.nntk.jdbc.driver;
 
 import java.util.HashMap;
 import java.util.Map;

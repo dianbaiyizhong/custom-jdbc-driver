@@ -1,8 +1,7 @@
-package com.nntk;
+package com.nntk.jdbc.driver;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.ArrayUtils;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -13,7 +12,7 @@ import java.sql.*;
 import java.util.*;
 
 @Slf4j
-public class JqResultSet implements ResultSet {
+public class HttpResultSet implements ResultSet {
 
 
     private List<String> lines = new ArrayList<>();
@@ -22,9 +21,8 @@ public class JqResultSet implements ResultSet {
     private String[] currentArray;
     private Map<String, Integer> colIndexMap = new LinkedHashMap<>();
 
-    private boolean isComplete = false;
 
-    public JqResultSet(String filepath, List<String> cols, String tableName) {
+    public HttpResultSet(List<String> cols) {
         lines = Lists.newArrayList("张三,男", "李四,13", "王五,111");
         for (int i = 0; i < cols.size(); i++) {
             colIndexMap.put(cols.get(i), i + 1);
@@ -33,9 +31,9 @@ public class JqResultSet implements ResultSet {
     }
 
     @Override
-    public boolean isClosed() throws SQLException {
-        log.info("================isClosed resultSet:{}", isComplete);
-        return isComplete;
+    public boolean isClosed() {
+        log.info("================resultSet isClosed");
+        return false;
     }
 
     @Override
@@ -45,27 +43,22 @@ public class JqResultSet implements ResultSet {
             currentData = datas.next();
             currentArray = currentData.split(",");
         }
-        log.info("====================next:{}", hasNext);
         return hasNext;
     }
 
     @Override
     public ResultSetMetaData getMetaData() {
-        log.info("=======================:{}", "getMetaData");
         Columns columns = new Columns();
-
         for (Map.Entry<String, Integer> entry : colIndexMap.entrySet()) {
             columns.addColumn(entry.getValue(), entry.getKey());
 
         }
         ResultSetMetaDataImpl resultSetMetaData = new ResultSetMetaDataImpl(columns);
-        isComplete = true;
         return resultSetMetaData;
     }
 
     @Override
     public void close() throws SQLException {
-
         log.info("================close resultSet");
     }
 
@@ -76,7 +69,6 @@ public class JqResultSet implements ResultSet {
 
     @Override
     public String getString(int columnIndex) throws SQLException {
-        log.info("getString:{}", ArrayUtils.toString(currentArray));
         return currentArray[columnIndex - 1];
     }
 

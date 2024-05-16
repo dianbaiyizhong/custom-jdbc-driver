@@ -1,35 +1,30 @@
-package com.nntk;
+package com.nntk.jdbc.driver;
 
 import com.google.common.collect.Lists;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
-import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Slf4j
-public class JqStatement implements Statement {
+public class HttpStatement implements Statement {
 
-    JqStatement() {
-        log.info("=================JqStatement");
+    HttpStatement() {
+        log.info("=================HttpStatement new instance");
     }
 
-    private boolean isComplete = false;
 
     @Override
     public ResultSet executeQuery(String sql) throws SQLException {
 
-        log.info("sql:{}", sql);
+        log.info("executeQuery:{}", sql);
 
         String tableName = "t1";
         List<String> cols = Lists.newArrayList("l1", "l2");
 
-        JqResultSet jqResultSet = new JqResultSet(null, cols, tableName);
+        HttpResultSet httpResultSet = new HttpResultSet(cols);
 
-        isComplete = true;
-        return jqResultSet;
+        return httpResultSet;
     }
 
     @Override
@@ -39,8 +34,7 @@ public class JqStatement implements Statement {
 
     @Override
     public void close() throws SQLException {
-
-        log.info("========jqStatement close");
+        log.info("========statement close");
     }
 
     @Override
@@ -55,7 +49,6 @@ public class JqStatement implements Statement {
 
     @Override
     public int getMaxRows() throws SQLException {
-        log.info("=============getMaxRows");
         throw new SQLFeatureNotSupportedException();
 
     }
@@ -82,7 +75,6 @@ public class JqStatement implements Statement {
 
     @Override
     public void cancel() throws SQLException {
-
         log.info("===============statement cancel");
     }
 
@@ -103,26 +95,18 @@ public class JqStatement implements Statement {
 
     @Override
     public boolean execute(String sql) throws SQLException {
-        log.info("============jqStatement sql:{}", sql);
         return false;
     }
 
     @Override
     public ResultSet getResultSet() throws SQLException {
-        log.info("============================:getResultSet");
-        List<String> cols = Lists.newArrayList("l1", "l2");
-        JqResultSet resultSet = new JqResultSet(null, cols, null);
-        return resultSet;
+        return null;
     }
 
     @Override
     public int getUpdateCount() throws SQLException {
         // https://youtrack.jetbrains.com/issue/DBE-18495/Query-wont-finish-running-in-DuckDB-with-0.8.1-driver-version
         // 包含更新计数的 int 值。 如果返回的结果是一个结果集对象或没有更多结果，则返回 -1。
-        log.info("=====================getUpdateCount");
-        if (isClosed()) {
-            throw new SQLException("Statement was closed");
-        }
         return -1;
     }
 
@@ -139,33 +123,26 @@ public class JqStatement implements Statement {
 
     @Override
     public int getFetchDirection() throws SQLException {
-        log.info("===========getFetchDirection");
         return ResultSet.FETCH_FORWARD;
     }
 
     @Override
     public void setFetchSize(int rows) throws SQLException {
-
-        log.info("=============setFetchSize:{}", rows);
     }
 
     @Override
     public int getFetchSize() throws SQLException {
-        log.info("===========getFetchSize");
-
-        return 10;
-    }
-
-    @Override
-    public int getResultSetConcurrency() throws SQLException {
-        log.info("===========getResultSetConcurrency");
 
         return 0;
     }
 
     @Override
+    public int getResultSetConcurrency() throws SQLException {
+        return 0;
+    }
+
+    @Override
     public int getResultSetType() throws SQLException {
-        log.info("============getResultSetType");
         throw new SQLFeatureNotSupportedException();
     }
 
@@ -186,21 +163,17 @@ public class JqStatement implements Statement {
 
     @Override
     public Connection getConnection() throws SQLException {
-        log.info("=========getConnection");
-
         return null;
     }
 
     @Override
     public boolean getMoreResults(int current) throws SQLException {
-        log.info("=========getMoreResults current:{}", current);
 
         return false;
     }
 
     @Override
     public ResultSet getGeneratedKeys() throws SQLException {
-        log.info("=========getGeneratedKeys");
         return null;
     }
 
@@ -236,14 +209,12 @@ public class JqStatement implements Statement {
 
     @Override
     public int getResultSetHoldability() throws SQLException {
-        log.info("=========getResultSetHoldability");
 
         return 0;
     }
 
     @Override
     public boolean isClosed() throws SQLException {
-        log.info("jqStatement:{}", isComplete);
         return true;
     }
 
@@ -264,7 +235,6 @@ public class JqStatement implements Statement {
 
     @Override
     public boolean isCloseOnCompletion() throws SQLException {
-        log.info("==================isCloseOnCompletion");
         return true;
     }
 

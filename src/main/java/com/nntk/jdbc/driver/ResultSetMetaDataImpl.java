@@ -1,11 +1,9 @@
-package com.nntk;
+package com.nntk.jdbc.driver;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 @Slf4j
 public class ResultSetMetaDataImpl implements ResultSetMetaData {
@@ -110,7 +108,6 @@ public class ResultSetMetaDataImpl implements ResultSetMetaData {
      */
     @Override
     public int getColumnDisplaySize(int column) throws SQLException {
-        log.info("===============getColumnDisplaySize");
         return 0;
     }
 
@@ -152,10 +149,9 @@ public class ResultSetMetaDataImpl implements ResultSetMetaData {
      */
     @Override
     public String getSchemaName(int column) throws SQLException {
-        log.info("===============getSchemaName");
 
         //todo 表名
-        return null;
+        return "getSchemaName";
     }
 
     /**
@@ -198,7 +194,7 @@ public class ResultSetMetaDataImpl implements ResultSetMetaData {
     @Override
     public String getTableName(int column) throws SQLException {
         //todo 表名
-        return null;
+        return "getTableName";
     }
 
     /**
@@ -211,7 +207,7 @@ public class ResultSetMetaDataImpl implements ResultSetMetaData {
      */
     @Override
     public String getCatalogName(int column) throws SQLException {
-        return null;
+        return "getCatalogName";
     }
 
     /**
@@ -224,8 +220,7 @@ public class ResultSetMetaDataImpl implements ResultSetMetaData {
      */
     @Override
     public int getColumnType(int column) throws SQLException {
-        //todo 列类型
-        log.info("===============getColumnType");
+        // 12代表java string类型
 
         return 12;
     }
@@ -241,8 +236,6 @@ public class ResultSetMetaDataImpl implements ResultSetMetaData {
     @Override
     public String getColumnTypeName(int column) throws SQLException {
         //列类型的全限定名
-        log.info("===============getColumnTypeName");
-
         return "VARCHAR";
     }
 
@@ -299,8 +292,6 @@ public class ResultSetMetaDataImpl implements ResultSetMetaData {
      */
     @Override
     public String getColumnClassName(int column) throws SQLException {
-        log.info("===============getColumnClassName");
-
 
         return "java.lang.String";
     }

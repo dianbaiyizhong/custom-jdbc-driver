@@ -86,7 +86,7 @@
                     <!--可不指定-->
                     <archive>
                         <manifest>
-                            <mainClass>com.nntk.HttpDriver</mainClass>
+                            <mainClass>com.nntk.jdbc.driver.HttpDriver</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

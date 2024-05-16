@@ -1,45 +1,27 @@
-package com.nntk;
+package com.nntk.jdbc.driver;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.sql.Array;
-import java.sql.Blob;
-import java.sql.CallableStatement;
-import java.sql.Clob;
-import java.sql.Connection;
-import java.sql.DatabaseMetaData;
-import java.sql.NClob;
-import java.sql.PreparedStatement;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLException;
-import java.sql.SQLWarning;
-import java.sql.SQLXML;
-import java.sql.Savepoint;
-import java.sql.Statement;
-import java.sql.Struct;
+import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
 @Slf4j
-public class JqConnection implements Connection {
+public class HttpConnection implements Connection {
 
-
-    private boolean isComplete = false;
 
     @Override
     public Statement createStatement() throws SQLException {
-        JqStatement jqStatement = new JqStatement();
-        isComplete = true;
-        return jqStatement;
+        HttpStatement httpStatement = new HttpStatement();
+        return httpStatement;
     }
 
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         log.info("prepareStatement:{}", sql);
-        JqPreparedStatement jqStatement = new JqPreparedStatement();
-        isComplete = true;
-        return jqStatement;
+        HttpPreparedStatement statement = new HttpPreparedStatement();
+        return statement;
     }
 
     @Override
@@ -82,14 +64,13 @@ public class JqConnection implements Connection {
 
     @Override
     public boolean isClosed() throws SQLException {
-        log.info("JqConnection isClosed:{}",isComplete);
-        return isComplete;
+        return false;
     }
 
     @Override
     public DatabaseMetaData getMetaData() throws SQLException {
-        log.info("getMetaData");
-        return new MyDatabaseMetaData();
+        log.info("connection getMetaData");
+        return new HttpDatabaseMetaData();
     }
 
     @Override
@@ -136,7 +117,7 @@ public class JqConnection implements Connection {
     public Statement createStatement(int resultSetType, int resultSetConcurrency)
             throws SQLException {
         log.info("createStatement");
-        return new JqStatement();
+        return new HttpStatement();
     }
 
     @Override

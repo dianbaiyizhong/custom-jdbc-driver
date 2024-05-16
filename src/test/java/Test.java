@@ -1,4 +1,4 @@
-import com.nntk.JqConnection;
+import com.nntk.jdbc.driver.HttpConnection;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,9 +16,9 @@ public class Test {
         //Class.forName("com.mysql.jdbc.Driver");
        // Connection connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
 //
-        Class.forName("com.nntk.JqDriver");
+        Class.forName("com.nntk.jdbc.driver.HttpDriver");
 
-        JqConnection connection = (JqConnection) DriverManager.getConnection("11");
+        HttpConnection connection = (HttpConnection) DriverManager.getConnection("11");
 
         // sql 语句 是使用了 别名的
         PreparedStatement preparedStatement = connection.prepareStatement("select *  from t_user ");

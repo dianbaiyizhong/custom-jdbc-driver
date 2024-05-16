@@ -1,9 +1,9 @@
-package com.nntk;
+package com.nntk.jdbc.driver;
 
 
 import java.sql.*;
 
-public class MyDatabaseMetaData implements DatabaseMetaData {
+public class HttpDatabaseMetaData implements DatabaseMetaData {
 
     @Override
     public boolean allProceduresAreCallable() throws SQLException {
@@ -52,17 +52,17 @@ public class MyDatabaseMetaData implements DatabaseMetaData {
 
     @Override
     public String getDatabaseProductName() throws SQLException {
-        return null;
+        return "http jdbc (ver. 1.0.0)";
     }
 
     @Override
     public String getDatabaseProductVersion() throws SQLException {
-        return null;
+        return "1.0.0.0";
     }
 
     @Override
     public String getDriverName() throws SQLException {
-        return null;
+        return "http jdbc driver";
     }
 
     @Override

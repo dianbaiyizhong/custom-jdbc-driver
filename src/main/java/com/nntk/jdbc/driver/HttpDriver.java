@@ -1,4 +1,4 @@
-package com.nntk;
+package com.nntk.jdbc.driver;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,15 +7,15 @@ import java.util.Properties;
 import java.util.logging.Logger;
 
 @Slf4j
-public class JqDriver implements Driver {
+public class HttpDriver implements Driver {
     private static boolean registered;
-    private static final JqDriver INSTANCE = new JqDriver();
+    private static final HttpDriver INSTANCE = new HttpDriver();
 
     static {
         load();
     }
 
-    private static JqDriver load() {
+    private static HttpDriver load() {
         try {
             if (!registered) {
                 registered = true;
@@ -31,7 +31,7 @@ public class JqDriver implements Driver {
     @Override
     public Connection connect(String url, Properties info) throws SQLException {
 
-        return new JqConnection();
+        return new HttpConnection();
     }
 
     @Override
