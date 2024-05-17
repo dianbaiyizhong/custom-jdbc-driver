@@ -13,8 +13,8 @@ public class TestDriver {
         HttpResultSet resultSet = (HttpResultSet) statement.executeQuery("select");
         System.out.println(resultSet.getMetaData());
         while (resultSet.next()) {
-            String l1 = resultSet.getString("l1");
-            String l2 = resultSet.getString("l2");
+            String l1 = resultSet.getString(1);
+            String l2 = resultSet.getString(2);
             System.out.println(l1 + "=============" + l2);
         }
 

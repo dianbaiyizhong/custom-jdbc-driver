@@ -22,27 +22,27 @@ public class HttpDriver implements Driver {
                 DriverManager.registerDriver(INSTANCE);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            log.error("HttpDriver load error:", e);
         }
         return INSTANCE;
     }
 
 
     @Override
-    public Connection connect(String url, Properties info) throws SQLException {
-
+    public Connection connect(String url, Properties info) {
+        log.info("connect url:{}", url);
+        log.info("connect properties:{}", info);
         return new HttpConnection();
     }
 
     @Override
-    public boolean acceptsURL(String url) throws SQLException {
-        log.info("my acceptsURL:{}", url);
+    public boolean acceptsURL(String url) {
+        log.info("acceptsURL:{}", url);
         return true;
     }
 
     @Override
-    public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) throws SQLException {
-        log.info("==getPropertyInfo:{}", info);
+    public DriverPropertyInfo[] getPropertyInfo(String url, Properties info) {
         return new DriverPropertyInfo[0];
     }
 

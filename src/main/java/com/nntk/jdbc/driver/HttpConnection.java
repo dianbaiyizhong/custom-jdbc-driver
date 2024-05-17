@@ -20,8 +20,7 @@ public class HttpConnection implements Connection {
     @Override
     public PreparedStatement prepareStatement(String sql) throws SQLException {
         log.info("prepareStatement:{}", sql);
-        HttpPreparedStatement statement = new HttpPreparedStatement();
-        return statement;
+        return null;
     }
 
     @Override

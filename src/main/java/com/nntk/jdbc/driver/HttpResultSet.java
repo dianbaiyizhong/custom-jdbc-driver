@@ -23,7 +23,7 @@ public class HttpResultSet implements ResultSet {
 
 
     public HttpResultSet(List<String> cols) {
-        lines = Lists.newArrayList("张三,男", "李四,13", "王五,111");
+        lines = Lists.newArrayList("张三,男", "李四,男", "王五,男");
         for (int i = 0; i < cols.size(); i++) {
             colIndexMap.put(cols.get(i), i + 1);
         }
@@ -51,7 +51,6 @@ public class HttpResultSet implements ResultSet {
         Columns columns = new Columns();
         for (Map.Entry<String, Integer> entry : colIndexMap.entrySet()) {
             columns.addColumn(entry.getValue(), entry.getKey());
-
         }
         ResultSetMetaDataImpl resultSetMetaData = new ResultSetMetaDataImpl(columns);
         return resultSetMetaData;
@@ -150,7 +149,7 @@ public class HttpResultSet implements ResultSet {
     @Override
     public String getString(String columnLabel) throws SQLException {
 
-        return "currentArray[this.colIndexMap.get(columnLabel)]";
+        return "这个是根据label来获取值";
     }
 
     @Override
