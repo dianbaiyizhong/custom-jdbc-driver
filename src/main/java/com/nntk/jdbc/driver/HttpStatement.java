@@ -1,6 +1,7 @@
 package com.nntk.jdbc.driver;
 
 import com.google.common.collect.Lists;
+import com.jayway.jsonpath.JsonPath;
 import lombok.extern.slf4j.Slf4j;
 
 import java.sql.*;
@@ -15,11 +16,11 @@ public class HttpStatement implements Statement {
 
 
     @Override
-    public ResultSet executeQuery(String sql) throws SQLException {
+    public ResultSet executeQuery(String sql) {
 
         log.info("executeQuery:{}", sql);
+//        List<String> authors = JsonPath.read(json, "$.store.book[*].author");
 
-        String tableName = "t1";
         List<String> cols = Lists.newArrayList("l1", "l2");
 
         HttpResultSet httpResultSet = new HttpResultSet(cols);
