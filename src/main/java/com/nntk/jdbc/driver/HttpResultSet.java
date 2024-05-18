@@ -15,17 +15,29 @@ import java.util.*;
 public class HttpResultSet implements ResultSet {
 
 
-    private List<String> lines = new ArrayList<>();
-    private Iterator<String> datas;
-    private String currentData;
-    private String[] currentArray;
+    private List<Map<String, String>> lines = new ArrayList<>();
+    private Iterator<Map<String, String>> datas;
+    private Map<String, String> currentData;
+    private List<String> currentArray = new ArrayList<>();
     private Map<String, Integer> colIndexMap = new LinkedHashMap<>();
 
 
-    public HttpResultSet(List<String> cols) {
-        lines = Lists.newArrayList("张三,男", "李四,男", "王五,男");
-        for (int i = 0; i < cols.size(); i++) {
-            colIndexMap.put(cols.get(i), i + 1);
+    private List<String> getColumnList(List<Map<String, String>> resultList) {
+        Map<String, String> firstRow = resultList.get(0);
+        List<String> result = new ArrayList<>();
+        for (String key : firstRow.keySet()) {
+            result.add(key);
+        }
+        return result;
+    }
+
+    public HttpResultSet(List<Map<String, String>> resultList) {
+
+        List<String> columnList = getColumnList(resultList);
+
+        lines = resultList;
+        for (int i = 0; i < columnList.size(); i++) {
+            colIndexMap.put(columnList.get(i), i + 1);
         }
         datas = lines.iterator();
     }
@@ -40,8 +52,11 @@ public class HttpResultSet implements ResultSet {
     public boolean next() {
         boolean hasNext = datas.hasNext();
         if (hasNext) {
+            currentArray = new ArrayList<>();
             currentData = datas.next();
-            currentArray = currentData.split(",");
+            for (String value : currentData.values()) {
+                currentArray.add(value);
+            }
         }
         return hasNext;
     }
@@ -68,7 +83,7 @@ public class HttpResultSet implements ResultSet {
 
     @Override
     public String getString(int columnIndex) throws SQLException {
-        return currentArray[columnIndex - 1];
+        return currentArray.get(columnIndex - 1);
     }
 
     @Override

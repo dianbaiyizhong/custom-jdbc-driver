@@ -1,5 +1,6 @@
 package com.nntk.jdbc.driver;
 
+import cn.hutool.core.lang.Singleton;
 import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
@@ -12,7 +13,6 @@ public class HttpDriver implements Driver {
     private static final HttpDriver INSTANCE = new HttpDriver();
 
     static {
-        log.info("====");
         load();
     }
 
@@ -33,6 +33,10 @@ public class HttpDriver implements Driver {
     public Connection connect(String url, Properties info) {
         log.info("connect url:{}", url);
         log.info("connect properties:{}", info);
+
+        DsBasicInfo dsBasicInfo = Singleton.get(DsBasicInfo.class);
+        dsBasicInfo.setUrl(url);
+        dsBasicInfo.setInfo(info);
         return new HttpConnection();
     }
 
