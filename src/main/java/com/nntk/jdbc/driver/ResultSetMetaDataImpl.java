@@ -1,11 +1,11 @@
 package com.nntk.jdbc.driver;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
-@Slf4j
+@Log4j2
 public class ResultSetMetaDataImpl implements ResultSetMetaData {
     private Columns columns;
 

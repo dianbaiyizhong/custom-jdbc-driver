@@ -1,17 +1,18 @@
 package com.nntk.jdbc.driver;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.Properties;
 import java.util.logging.Logger;
 
-@Slf4j
+@Log4j2
 public class HttpDriver implements Driver {
     private static boolean registered;
     private static final HttpDriver INSTANCE = new HttpDriver();
 
     static {
+        log.info("====");
         load();
     }
 

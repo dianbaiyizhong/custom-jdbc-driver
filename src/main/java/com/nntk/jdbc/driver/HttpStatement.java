@@ -2,12 +2,12 @@ package com.nntk.jdbc.driver;
 
 import com.google.common.collect.Lists;
 import com.jayway.jsonpath.JsonPath;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.List;
 
-@Slf4j
+@Log4j2
 public class HttpStatement implements Statement {
 
     HttpStatement() {

@@ -1,7 +1,7 @@
 package com.nntk.jdbc.driver;
 
 import com.google.common.collect.Lists;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.InputStream;
 import java.io.Reader;
@@ -11,7 +11,7 @@ import java.sql.Date;
 import java.sql.*;
 import java.util.*;
 
-@Slf4j
+@Log4j2
 public class HttpResultSet implements ResultSet {
 
 

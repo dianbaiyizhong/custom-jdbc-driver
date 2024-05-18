@@ -1,5 +1,5 @@
 import com.nntk.jdbc.driver.HttpConnection;
-import lombok.extern.slf4j.Slf4j;
+import lombok.extern.log4j.Log4j2;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-@Slf4j
+@Log4j2
 public class Test {
 
     private static final String URL = "jdbc:mysql://localhost:3306/ddd?serverTimezone=UTC&useUnicode=true&characterEncoding=utf8";
