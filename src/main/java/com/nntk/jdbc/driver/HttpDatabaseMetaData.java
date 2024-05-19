@@ -1,9 +1,48 @@
 package com.nntk.jdbc.driver;
 
 
-import java.sql.*;
+import com.nntk.jdbc.driver.adapter.HttpAdapterImpl;
+import lombok.extern.log4j.Log4j2;
 
+import java.sql.*;
+import java.util.List;
+import java.util.Map;
+
+@Log4j2
 public class HttpDatabaseMetaData implements DatabaseMetaData {
+    @Override
+    public ResultSet getTables(String catalog, String schemaPattern, String tableNamePattern, String[] types) throws SQLException {
+        log.info("getTables====catalog:{},schemaPattern:{}", catalog, schemaPattern);
+        List<Map<String, String>> tables = new HttpAdapterImpl().getTables();
+        return new HttpResultSet(tables);
+    }
+
+
+    @Override
+    public ResultSet getSchemas() throws SQLException {
+        log.info("getSchemas");
+        List<Map<String, String>> tables = new HttpAdapterImpl().getSchemas();
+        return new HttpResultSet(tables);
+    }
+
+    @Override
+    public ResultSet getCatalogs() throws SQLException {
+        log.info("getCatalogs");
+        return null;
+    }
+
+    @Override
+    public ResultSet getTableTypes() throws SQLException {
+        log.info("getTableTypes");
+        return null;
+    }
+
+    @Override
+    public ResultSet getColumns(String catalog, String schemaPattern, String tableNamePattern, String columnNamePattern) throws SQLException {
+        log.info("getColumns,catalog:{},{},{},{}", catalog, schemaPattern, tableNamePattern, columnNamePattern);
+        List<Map<String, String>> tables = new HttpAdapterImpl().getColumns(tableNamePattern);
+        return new HttpResultSet(tables);
+    }
 
     @Override
     public boolean allProceduresAreCallable() throws SQLException {
@@ -605,33 +644,10 @@ public class HttpDatabaseMetaData implements DatabaseMetaData {
         return null;
     }
 
-    @Override
-    public ResultSet getTables(String catalog, String schemaPattern, String tableNamePattern, String[] types) throws SQLException {
-        return null;
-    }
-
-    @Override
-    public ResultSet getSchemas() throws SQLException {
-        return null;
-    }
-
-    @Override
-    public ResultSet getCatalogs() throws SQLException {
-        return null;
-    }
-
-    @Override
-    public ResultSet getTableTypes() throws SQLException {
-        return null;
-    }
-
-    @Override
-    public ResultSet getColumns(String catalog, String schemaPattern, String tableNamePattern, String columnNamePattern) throws SQLException {
-        return null;
-    }
 
     @Override
     public ResultSet getColumnPrivileges(String catalog, String schema, String table, String columnNamePattern) throws SQLException {
+        log.info("getColumnPrivileges");
         return null;
     }
 

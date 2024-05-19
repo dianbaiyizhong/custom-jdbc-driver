@@ -18,5 +18,10 @@ public abstract class HttpAdapter {
     public abstract List<Map<String, String>> sendHttp(String sql);
 
 
+    public abstract List<Map<String, String>> getTables();
+
+    public abstract List<Map<String, String>> getColumns(String tb);
+
+    public abstract List<Map<String, String>> getSchemas();
 
 }

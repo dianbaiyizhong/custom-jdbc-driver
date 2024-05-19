@@ -16,20 +16,40 @@ public class HttpStatement implements Statement {
         log.info("HttpStatement new instance");
     }
 
+    private String theSql;
 
     @Override
-    public ResultSet executeQuery(String sql) throws SQLFeatureNotSupportedException {
+    public boolean execute(String sql) throws SQLException {
+        // datagrip双击表后，触发的方法
+        log.info("execute sql:{}", sql);
+        this.theSql = sql;
+        return true;
+    }
+
+    @Override
+    public ResultSet executeQuery(String sql) {
+        return executeCommonQuery(sql);
+    }
+
+
+    private ResultSet executeCommonQuery(String sql) {
+
         log.info("executeQuery:{}", sql);
         HttpAdapterImpl httpAdapter = new HttpAdapterImpl();
         List<Map<String, String>> resultList = httpAdapter.sendHttp(sql);
         HttpResultSet httpResultSet = new HttpResultSet(resultList);
         return httpResultSet;
+
+    }
+
+    @Override
+    public ResultSet getResultSet() throws SQLException {
+        return executeCommonQuery(theSql);
     }
 
     @Override
     public int executeUpdate(String sql) throws SQLException {
-        log.info("d-d-sd-");
-        throw new SQLFeatureNotSupportedException("不支持非select语句");
+        throw new SQLFeatureNotSupportedException("不支持非select语句!");
     }
 
     @Override
@@ -93,15 +113,6 @@ public class HttpStatement implements Statement {
 
     }
 
-    @Override
-    public boolean execute(String sql) throws SQLException {
-        throw new SQLFeatureNotSupportedException("不支持非select语句");
-    }
-
-    @Override
-    public ResultSet getResultSet() throws SQLException {
-        return null;
-    }
 
     @Override
     public int getUpdateCount() throws SQLException {

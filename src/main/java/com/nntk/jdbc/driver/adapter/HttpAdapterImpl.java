@@ -12,6 +12,7 @@ import lombok.extern.log4j.Log4j2;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Log4j2
 public class HttpAdapterImpl extends HttpAdapter {
@@ -32,6 +33,40 @@ public class HttpAdapterImpl extends HttpAdapter {
 
         List<Map<String, String>> result = JsonPath.read(rawJson, "$.result");
         return result;
+    }
+
+    @Override
+    public List<Map<String, String>> getTables() {
+        Map<String, String> tableInfo = new HashMap<>();
+        tableInfo.put("Table_NAME", "t1");
+        return Lists.newArrayList(tableInfo);
+    }
+
+    @Override
+    public List<Map<String, String>> getColumns(String tb) {
+        Map<String, String> tableInfo = new HashMap<>();
+        String schema = Optional.ofNullable(getDsBasicInfo().getInfo().getProperty("schema")).orElse("请设置你的schema属性，方便显示");
+
+        // 缺一个，datagrip都显示不出来，尤其是TABLE_NAME要对应上
+        tableInfo.put("COLUMN_NAME", "id");
+        tableInfo.put("ORDINAL_POSITION", "1");
+        tableInfo.put("TABLE_CAT", "def");
+        tableInfo.put("TABLE_SCHEM", schema);
+        tableInfo.put("TABLE_NAME", "t1");
+        tableInfo.put("DATA_TYPE", "12");
+        tableInfo.put("TYPE_NAME", "VARCHAR");
+        tableInfo.put("COLUMN_SIZE", "255");
+        return Lists.newArrayList(tableInfo);
+    }
+
+    @Override
+    public List<Map<String, String>> getSchemas() {
+        Map<String, String> tableInfo = new HashMap<>();
+
+        String schema = Optional.ofNullable(getDsBasicInfo().getInfo().getProperty("schema")).orElse("请设置你的schema属性，方便显示");
+        tableInfo.put("TABLE_SCHEM", schema);
+        tableInfo.put("TABLE_CATALOG", "def");
+        return Lists.newArrayList(tableInfo);
     }
 
 

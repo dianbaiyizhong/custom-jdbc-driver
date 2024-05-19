@@ -274,7 +274,7 @@ public class HttpConnection implements Connection {
     @Override
     public String getSchema() throws SQLException {
         log.info("getSchema");
-        return "custom schema";
+        return "my_testdb";
     }
 
     @Override
